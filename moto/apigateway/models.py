@@ -11,11 +11,11 @@ import responses
 
 try:
     # Recommended as of 0.7.x
-    from openapi_spec_validator import validate  # type: ignore
+    from openapi_spec_validator import validate
 except ImportError:
     # Only used in < 0.7.x
     # (Also exists in 0.7.0, but throws a warning)
-    from openapi_spec_validator import validate_spec as validate  # type: ignore
+    from openapi_spec_validator import validate_spec as validate
 from openapi_spec_validator.validation.exceptions import OpenAPIValidationError
 from moto.core import BaseBackend, BackendDict, BaseModel, CloudFormationModel
 from .utils import create_id, to_path
@@ -1573,7 +1573,7 @@ class APIGatewayBackend(BaseBackend):
         """
         if fail_on_warnings:
             try:
-                validate(api_doc)  # type: ignore[arg-type]
+                validate(api_doc)
             except OpenAPIValidationError as e:
                 raise InvalidOpenAPIDocumentException(e)
             except AttributeError:
@@ -1648,7 +1648,7 @@ class APIGatewayBackend(BaseBackend):
 
         if fail_on_warnings:
             try:
-                validate(api_doc)  # type: ignore[arg-type]
+                validate(api_doc)
             except OpenAPIValidationError as e:
                 raise InvalidOpenAPIDocumentException(e)
             except AttributeError:

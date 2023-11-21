@@ -26,7 +26,7 @@ try:
     from pyparsing import DelimitedList
 except ImportError:
     # delimited_list is deprecated in favor of DelimitedList in pyparsing 3.1.0
-    from pyparsing import delimited_list as DelimitedList  # type: ignore[assignment]
+    from pyparsing import delimited_list as DelimitedList
 
 from .exceptions import (
     InvalidInputException,
@@ -276,13 +276,13 @@ class _PartitionFilterExpressionCache:
 
         # NOTE these are AWS Athena column name best practices
         ident = Forward().set_name("ident")
-        ident <<= Word(alphanums + "._").set_parse_action(_Ident) | lpar + ident + rpar  # type: ignore
+        ident <<= Word(alphanums + "._").set_parse_action(_Ident) | lpar + ident + rpar
 
         number = Forward().set_name("number")
-        number <<= pyparsing_common.number | lpar + number + rpar  # type: ignore
+        number <<= pyparsing_common.number | lpar + number + rpar
 
         string = Forward().set_name("string")
-        string <<= QuotedString(quote_char="'", esc_quote="''") | lpar + string + rpar  # type: ignore
+        string <<= QuotedString(quote_char="'", esc_quote="''") | lpar + string + rpar
 
         literal = (number | string).set_name("literal")
         literal_list = DelimitedList(literal, min=1).set_name("list")
@@ -298,7 +298,7 @@ class _PartitionFilterExpressionCache:
         in_, between, like, not_, is_, null = map(
             CaselessKeyword, "in between like not is null".split()
         )
-        not_ = Suppress(not_)  # type: ignore  # only needed for matching
+        not_ = Suppress(not_)  # only needed for matching
 
         cond = (
             (ident + is_ + null).set_parse_action(_IsNull)
