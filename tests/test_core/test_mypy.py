@@ -1,7 +1,8 @@
 import boto3
 
-from moto import mock_s3
+from moto import mock_s3, XRaySegment
 from moto.core.models import BaseMockAWS
+from contextlib import AbstractContextManager
 
 
 @mock_s3
@@ -40,3 +41,9 @@ assert x == 456
 
 y: int = test_without_parentheses()
 assert y == 123
+
+
+def test_xray() -> None:
+    xray: AbstractContextManager[object] = XRaySegment()
+    with xray:
+        assert True
