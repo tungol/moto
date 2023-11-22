@@ -47,3 +47,12 @@ def test_xray() -> None:
     xray: AbstractContextManager[object] = XRaySegment()
     with xray:
         assert True
+
+
+@XRaySegment  # type: ignore[call-arg]
+def this_is_the_wrong_use_of_XRaySegment() -> None:
+    # This is not a test and should never be called
+    # because warn_unused_ignores is enabed, this will fail mypy if the typing of XRaySegment
+    # would allow this. Normally that wouldn't be a concern at all, but since lazy_load is
+    # a pretty complicated overload type, it seems worth double checking
+    assert False
